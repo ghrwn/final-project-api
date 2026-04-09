@@ -5,10 +5,10 @@
     "description": "API documentation for products and orders collections",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "final-project-api-lrn7.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/products/": {
