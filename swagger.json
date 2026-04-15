@@ -5,81 +5,90 @@
     "description": "API for products, orders, users, and reviews",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "final-project-api-lrn7.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
-    "/": {
+    "/auth/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Start Google OAuth login",
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/auth/google": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
     },
     "/auth/google/callback": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Google OAuth callback",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
     "/auth/profile": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current logged in user",
         "responses": {
           "200": {
             "description": "OK"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Not logged in"
           }
         }
       }
     },
     "/auth/login-failed": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login failed",
         "responses": {
           "401": {
-            "description": "Unauthorized"
+            "description": "Login failed"
           }
         }
       }
     },
     "/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout current user",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Logged out successfully"
           }
         }
       }
     },
     "/products/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get all products",
+        "description": "Returns all products from MongoDB",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Products retrieved successfully"
           },
           "500": {
             "description": "Internal Server Error"
@@ -87,34 +96,55 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create a new product",
+        "description": "Creates a new product. Authentication required.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "price",
+                "category",
+                "stock",
+                "brand",
+                "rating",
+                "createdAt"
+              ],
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Bluetooth Speaker"
                 },
                 "price": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 95
                 },
                 "category": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Audio"
                 },
                 "stock": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 18
                 },
                 "brand": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "JBL"
                 },
                 "rating": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 4.3
                 },
                 "createdAt": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2026-04-14"
                 }
               }
             }
@@ -122,13 +152,13 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Product created successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Missing or invalid input"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Authentication required"
           },
           "500": {
             "description": "Internal Server Error"
@@ -138,24 +168,29 @@
     },
     "/products/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get one product by id",
+        "description": "Returns a single product by MongoDB ObjectId",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the product"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Product retrieved successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid product id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Product not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -163,40 +198,62 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update a product",
+        "description": "Updates a product by id. Authentication required.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the product"
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "price",
+                "category",
+                "stock",
+                "brand",
+                "rating",
+                "createdAt"
+              ],
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Bluetooth Speaker Plus"
                 },
                 "price": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 110
                 },
                 "category": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Audio"
                 },
                 "stock": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 16
                 },
                 "brand": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "JBL"
                 },
                 "rating": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 4.6
                 },
                 "createdAt": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2026-04-14"
                 }
               }
             }
@@ -204,16 +261,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "Product updated successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid id or invalid input"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Authentication required"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Product not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -221,24 +278,29 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete a product",
+        "description": "Deletes a product by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the product"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Product deleted successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid product id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Product not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -248,10 +310,14 @@
     },
     "/orders/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get all orders",
+        "description": "Returns all orders from MongoDB",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Orders retrieved successfully"
           },
           "500": {
             "description": "Internal Server Error"
@@ -259,34 +325,55 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create a new order",
+        "description": "Creates a new order. Authentication required.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "productId",
+                "quantity",
+                "totalPrice",
+                "customerName",
+                "status",
+                "orderDate",
+                "shippingAddress"
+              ],
               "properties": {
                 "productId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "PASTE_PRODUCT_ID_HERE"
                 },
                 "quantity": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 2
                 },
                 "totalPrice": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 220
                 },
                 "customerName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Noah Carter"
                 },
                 "status": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "pending"
                 },
                 "orderDate": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2026-04-14"
                 },
                 "shippingAddress": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "55 Oak Avenue"
                 }
               }
             }
@@ -294,13 +381,13 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Order created successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Missing or invalid input"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Authentication required"
           },
           "500": {
             "description": "Internal Server Error"
@@ -310,24 +397,29 @@
     },
     "/orders/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get one order by id",
+        "description": "Returns a single order by MongoDB ObjectId",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the order"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Order retrieved successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid order id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Order not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -335,40 +427,62 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Update an order",
+        "description": "Updates an order by id. Authentication required.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the order"
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "productId",
+                "quantity",
+                "totalPrice",
+                "customerName",
+                "status",
+                "orderDate",
+                "shippingAddress"
+              ],
               "properties": {
                 "productId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "PASTE_PRODUCT_ID_HERE"
                 },
                 "quantity": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 3
                 },
                 "totalPrice": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 330
                 },
                 "customerName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Noah Carter"
                 },
                 "status": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "shipped"
                 },
                 "orderDate": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2026-04-14"
                 },
                 "shippingAddress": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "55 Oak Avenue"
                 }
               }
             }
@@ -376,16 +490,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "Order updated successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid id or invalid input"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Authentication required"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Order not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -393,24 +507,29 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Delete an order",
+        "description": "Deletes an order by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the order"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Order deleted successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid order id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Order not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -420,10 +539,13 @@
     },
     "/users/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Users retrieved successfully"
           },
           "500": {
             "description": "Internal Server Error"
@@ -431,45 +553,16 @@
         }
       },
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "role": {
-                  "example": "any"
-                },
-                "isActive": {
-                  "example": "any"
-                },
-                "favoriteCategory": {
-                  "example": "any"
-                },
-                "address": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
-            }
-          }
+        "tags": [
+          "Users"
         ],
+        "summary": "Create a user",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "User created successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Missing or invalid input"
           },
           "500": {
             "description": "Internal Server Error"
@@ -479,7 +572,10 @@
     },
     "/users/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get one user by id",
         "parameters": [
           {
             "name": "id",
@@ -490,13 +586,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User retrieved successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid user id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "User not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -504,54 +600,27 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update a user",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "role": {
-                  "example": "any"
-                },
-                "isActive": {
-                  "example": "any"
-                },
-                "favoriteCategory": {
-                  "example": "any"
-                },
-                "address": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "User updated successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid user id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "User not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -559,7 +628,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete a user",
         "parameters": [
           {
             "name": "id",
@@ -570,13 +642,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User deleted successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid user id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "User not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -586,10 +658,13 @@
     },
     "/reviews/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get all reviews",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Reviews retrieved successfully"
           },
           "500": {
             "description": "Internal Server Error"
@@ -597,45 +672,16 @@
         }
       },
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "productId": {
-                  "example": "any"
-                },
-                "reviewerName": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "rating": {
-                  "example": "any"
-                },
-                "comment": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
-            }
-          }
+        "tags": [
+          "Reviews"
         ],
+        "summary": "Create a review",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Review created successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Missing or invalid input"
           },
           "500": {
             "description": "Internal Server Error"
@@ -645,7 +691,10 @@
     },
     "/reviews/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get one review by id",
         "parameters": [
           {
             "name": "id",
@@ -656,13 +705,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Review retrieved successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid review id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Review not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -670,54 +719,27 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Update a review",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "productId": {
-                  "example": "any"
-                },
-                "reviewerName": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "rating": {
-                  "example": "any"
-                },
-                "comment": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "Review updated successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid review id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Review not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -725,7 +747,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Delete a review",
         "parameters": [
           {
             "name": "id",
@@ -736,13 +761,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Review deleted successfully"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request - Invalid review id"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Review not found"
           },
           "500": {
             "description": "Internal Server Error"
