@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ordersController = require("../controllers/orders");
+const { ensureAuthenticated } = require("../middleware/authenticate");
 
 /*  #swagger.tags = ['Orders']
     #swagger.summary = 'Get all orders'
@@ -16,15 +17,15 @@ router.get("/:id", ordersController.getSingleOrder);
 
 /*  #swagger.tags = ['Orders']
     #swagger.summary = 'Create a new order'
-    #swagger.description = 'Creates a new order. All fields are required.'
+    #swagger.description = 'Creates a new order. Authentication required.'
 */
-router.post("/", ordersController.createOrder);
+router.post("/", ensureAuthenticated, ordersController.createOrder);
 
 /*  #swagger.tags = ['Orders']
     #swagger.summary = 'Update an order'
-    #swagger.description = 'Updates an order by id. All fields are required.'
+    #swagger.description = 'Updates an order by id. Authentication required.'
 */
-router.put("/:id", ordersController.updateOrder);
+router.put("/:id", ensureAuthenticated, ordersController.updateOrder);
 
 /*  #swagger.tags = ['Orders']
     #swagger.summary = 'Delete an order'

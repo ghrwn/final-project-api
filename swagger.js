@@ -3,7 +3,7 @@ const swaggerAutogen = require("swagger-autogen")();
 const doc = {
   info: {
     title: "Final Project API",
-    description: "Products and Orders API"
+    description: "API for products, orders, users, and reviews"
   },
   host: "localhost:8080",
   schemes: ["http"]

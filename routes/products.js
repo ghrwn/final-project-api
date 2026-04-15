@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const productsController = require("../controllers/products");
+const { ensureAuthenticated } = require("../middleware/authenticate");
 
 /*  #swagger.tags = ['Products']
     #swagger.summary = 'Get all products'
@@ -16,15 +17,15 @@ router.get("/:id", productsController.getSingleProduct);
 
 /*  #swagger.tags = ['Products']
     #swagger.summary = 'Create a new product'
-    #swagger.description = 'Creates a new product. All fields are required.'
+    #swagger.description = 'Creates a new product. Authentication required.'
 */
-router.post("/", productsController.createProduct);
+router.post("/", ensureAuthenticated, productsController.createProduct);
 
 /*  #swagger.tags = ['Products']
     #swagger.summary = 'Update a product'
-    #swagger.description = 'Updates a product by id. All fields are required.'
+    #swagger.description = 'Updates a product by id. Authentication required.'
 */
-router.put("/:id", productsController.updateProduct);
+router.put("/:id", ensureAuthenticated, productsController.updateProduct);
 
 /*  #swagger.tags = ['Products']
     #swagger.summary = 'Delete a product'
