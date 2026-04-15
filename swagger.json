@@ -557,6 +557,55 @@
           "Users"
         ],
         "summary": "Create a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "email",
+                "role",
+                "isActive",
+                "favoriteCategory",
+                "address",
+                "createdAt"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "henryg"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "henry@example.com"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "favoriteCategory": {
+                  "type": "string",
+                  "example": "Electronics"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "123 Cedar Street"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2026-04-14"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "User created successfully"
@@ -610,6 +659,53 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "email",
+                "role",
+                "isActive",
+                "favoriteCategory",
+                "address",
+                "createdAt"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "henryg_updated"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "henry.updated@example.com"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "admin"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "favoriteCategory": {
+                  "type": "string",
+                  "example": "Accessories"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "456 Cedar Street"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2026-04-14"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -617,7 +713,7 @@
             "description": "User updated successfully"
           },
           "400": {
-            "description": "Bad Request - Invalid user id"
+            "description": "Bad Request - Invalid user id or invalid input"
           },
           "404": {
             "description": "User not found"
@@ -676,6 +772,55 @@
           "Reviews"
         ],
         "summary": "Create a review",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "productId",
+                "reviewerName",
+                "title",
+                "rating",
+                "comment",
+                "status",
+                "createdAt"
+              ],
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "example": "PASTE_PRODUCT_ID_HERE"
+                },
+                "reviewerName": {
+                  "type": "string",
+                  "example": "Morgan Lee"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Excellent quality"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 5
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "The product arrived on time and works great."
+                },
+                "status": {
+                  "type": "string",
+                  "example": "published"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2026-04-14"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Review created successfully"
@@ -729,6 +874,53 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "productId",
+                "reviewerName",
+                "title",
+                "rating",
+                "comment",
+                "status",
+                "createdAt"
+              ],
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "example": "PASTE_PRODUCT_ID_HERE"
+                },
+                "reviewerName": {
+                  "type": "string",
+                  "example": "Morgan Lee"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Still excellent"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 4
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "After more use, I still like it a lot."
+                },
+                "status": {
+                  "type": "string",
+                  "example": "updated"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2026-04-14"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -736,7 +928,7 @@
             "description": "Review updated successfully"
           },
           "400": {
-            "description": "Bad Request - Invalid review id"
+            "description": "Bad Request - Invalid review id or invalid input"
           },
           "404": {
             "description": "Review not found"
